@@ -33,19 +33,21 @@ pipeline {
     
     stage('Publish') {
       steps {
-        def server = Artifactory.server = 'Default Artifactory Server'
-        
-        def uploadSpec = """ {
-            "files": [
-                {
-                    "pattern": "target/hello-0.0.1.war",
-                    "target": "example-project/${BUILD_NUMBER}/",
-                    "props": "Integration-Tested=Yes: Performance-Tested=No"
-                }
-            ]
-        }"""
-        
-        server.upload(uploadSpec)
+        script {
+          def server = Artifactory.server = 'Default Artifactory Server'
+          
+          def uploadSpec = """ {
+              "files": [
+                  {
+                      "pattern": "target/hello-0.0.1.war",
+                      "target": "example-project/${BUILD_NUMBER}/",
+                      "props": "Integration-Tested=Yes: Performance-Tested=No"
+                  }
+              ]
+          }"""
+          
+          server.upload(uploadSpec)
+        }
       }
     }
   }
