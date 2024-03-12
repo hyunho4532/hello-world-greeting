@@ -11,7 +11,7 @@ pipeline {
       
     stage('Build & Unit test') {
       steps {
-        withMaven(maven: 'M3') {
+        container('maven') {
           sh 'mvn clean verify -DskipITs=true';
           junit '**/target/surefire-reports/TEST-*.xml' 
           archive 'target/*.jar'
