@@ -11,9 +11,11 @@ pipeline {
       
     stage('Build & Unit test') {
       steps {
-        sh 'mvn clean verify -DskipITs=true';
-        junit '**/target/surefire-reports/TEST-*.xml' 
-        archive 'target/*.jar'
+        withMaven(maven: 'M3') {
+          sh 'mvn clean verify -DskipITs=true';
+          junit '**/target/surefire-reports/TEST-*.xml' 
+          archive 'target/*.jar'
+        }
       }
     }
     
